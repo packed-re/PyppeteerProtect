@@ -1,7 +1,5 @@
 # PyppeteerProtect
 
-## About
-
 PyppeterProtect is an implementation of [rebrowser-patches](https://github.com/rebrowser/rebrowser-patches), in pyppeteer. A notable difference, however, is that you don't need to modify your installation of pyppeteer for it to work, you simply call `PyppeteerProtect` on a target page and the patches get applied automatically.
 
 PyppeteerProtect, at the moment, doesn't provide protection for running in headless mode. For this you should look into a library like [pyppeteer_stealth](https://github.com/MeiK2333/pyppeteer_stealth) (though it doesn't really work on any of the major anti-bot solutions, like DataDome, infact it makes you more detectable).
