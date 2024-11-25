@@ -1,0 +1,18 @@
+[project]
+name = "PyppeteerProtect"
+version = "1.0.0"
+authors = [
+	{ name="packed-re" },
+]
+description = "A library to prevent detections caused by Runtime.enable."
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+	"Programming Language :: Python :: 3",
+	"License :: OSI Approved :: MIT License",
+	"Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/packed-re/PyppeteerProtect"
+Issues = "https://github.com/packed-re/PyppeteerProtect/issues"

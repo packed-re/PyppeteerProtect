@@ -1,0 +1,8 @@
+LICENSE
+README.md
+pyproject.toml
+PyppeteerProtect/PyppeteerProtect.py
+PyppeteerProtect.egg-info/PKG-INFO
+PyppeteerProtect.egg-info/SOURCES.txt
+PyppeteerProtect.egg-info/dependency_links.txt
+PyppeteerProtect.egg-info/top_level.txt
