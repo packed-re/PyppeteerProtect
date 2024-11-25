@@ -26,8 +26,7 @@ pageProtect.useMainWorld();
 pageProtect.useIsolatedWorld();
 ```
 
-
-By default, PyppeteerProtect will use the execution context id of an isolated world. This is ideal for ensuring maximum security, as you don't have to worry about calling hooked global functions or accidentally leaking your pressence through global variables, however, it means you can't access the code of the target page.
+By default, PyppeteerProtect will use the execution context id of an isolated world. This is ideal for ensuring maximum security, as you don't have to worry about calling hooked global functions or accidentally leaking your pressence through global variables, however, it makes the code of the target page inaccessible.
 
 If you plan on using the main world execution context and nothing else, you can configure the PyppeteerProtect constructor to use it on creation like so:
 ```python
@@ -67,6 +66,6 @@ loop.run_until_complete(main());
 
 PyppeteerProtect works by calling `Runtime.disable` and hooking `CDPSession.send` to drop any `Runtime.enable` requests sent by the pyppeteer library. `Runtime.enable` is used to retrieve an execution context id, which is required for functions such as `Page.evaluate` and `Page.querySelectorAll` to work, but in doing so, it enables the scripts running on the target page to observe behavior that would indicate that the browser is being controlled by automation software, like pyppeteer/puppeteer.
 
-Though, as mentioned above, pyppeteer still needs an execution context to do anything useful, so PyppeteerProtect retrieves one either by calling out to a binding (created with `Runtime.addBinding` and `Runtime.bindingCalled`, and called using `Page.addScriptToEvaluateOnNewDocument` and `Runtime.evaluate` in an isolated context), or by creating an isolated world (using `Page.createIsolatedWorld`).
+PyppeteerProtect retrieves an execution context either by calling out to a binding (created with `Runtime.addBinding` and `Runtime.bindingCalled`, and called using `Page.addScriptToEvaluateOnNewDocument` and `Runtime.evaluate` in an isolated context), or by creating an isolated world (using `Page.createIsolatedWorld`).
 
 These patches are applied automatically on each navigation using `Page.on("response", callback)`.
