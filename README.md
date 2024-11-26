@@ -48,7 +48,7 @@ await pageProtect.useMainWorld();
 data = await page.evaluate("(token) => window.get_some_data(token)", token);
 ```
 
-If you have a particularly special use case and are having issues with automatically obtaining an execution context id, you can use PyppeteerProtect to wait until one is obtained (though if you stick to basic `Page.evaluate` calls, this isn't something you should be worried about, as it gets called automatically)
+If you have a particularly special use case and are having issues with automatically obtaining an execution context id, you can explicitly wait until one is obtained (though if you stick to basic `Page.evaluate` calls, this isn't something you should be worried about, as it gets called automatically)
 ```python
 await pageProtect.waitForExecutionContext();
 ```
