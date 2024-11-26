@@ -20,22 +20,16 @@ Set default arguments for the chrome executable that help stay protected (sets `
 ```python
 SetSecureArguments(); # should be called before pyppeteer.launch
 ```
+
 Protect individual pages:
 ```python
 pageProtect = await PyppeteerProtect(page);
 ```
+### Execution contexts
 Switch between using the main and isolated execution context:
 ```python
 await pageProtect.useMainWorld();
 await pageProtect.useIsolatedWorld();
-```
-
-You are freely able to swap between each of the contexts during active sessions. As an example, you might want to do something like this:
-```python
-await pageProtect.useIsolatedWorld();
-token = await page.evaluate("() => document.querySelector('input[type=\'hidden\']#embedded-token')"); # document.querySelector might have been hooked in the main world to block queries for #embedded-token
-await pageProtect.useMainWorld();
-data = await page.evaluate("(token) => window.get_some_data(token)", token);
 ```
 
 By default, PyppeteerProtect will use the execution context id of an isolated world. This is ideal for ensuring maximum security, as you don't have to worry about calling hooked global functions or accidentally leaking your pressence through global variables, however, it makes the code of the target page inaccessible.
@@ -43,6 +37,15 @@ By default, PyppeteerProtect will use the execution context id of an isolated wo
 If you plan on using the main world execution context and nothing else, you can configure the PyppeteerProtect constructor to use it on creation like so:
 ```python
 pageProtect = await PyppeteerProtect(page, True);
+```
+
+### Special use cases
+You are freely able to swap between each of the contexts during active sessions. As an example, you might want to do something like this:
+```python
+await pageProtect.useIsolatedWorld();
+token = await page.evaluate("() => document.querySelector('input[type=\'hidden\']#embedded-token')"); # document.querySelector might have been hooked in the main world to block queries for #embedded-token
+await pageProtect.useMainWorld();
+data = await page.evaluate("(token) => window.get_some_data(token)", token);
 ```
 
 If you have a particularly special use case and are having issues with automatically obtaining an execution context id, you can use PyppeteerProtect to wait until one is obtained (though if you stick to basic `Page.evaluate` calls, this isn't something you should be worried about, as it gets called automatically)
