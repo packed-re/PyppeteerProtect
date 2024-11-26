@@ -7,7 +7,7 @@ PyppeteerProtect (at the moment) doesn't provide protection for running in headl
 ## Install
 
 ```
-$ pip install PyppeteerProtect
+pip install PyppeteerProtect
 ```
 
 ## Usage
