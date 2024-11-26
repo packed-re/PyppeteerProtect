@@ -2,7 +2,7 @@
 
 PyppeterProtect is an implementation of [rebrowser-patches](https://github.com/rebrowser/rebrowser-patches), in pyppeteer, with the notable difference of not requiring you to modify your installation of pyppeteer for it to work. You simply call `PyppeteerProtect` on a target page and the patches get applied automatically.
 
-PyppeteerProtect (at the moment) doesn't provide protection for running in headless mode, besides a simple set of the useragent to remove `HeadlessChrome`. For this you should look into finding an additional library that you can run over PyppeteerProtect that can offer such protections, like [pyppeteer_stealth](https://github.com/MeiK2333/pyppeteer_stealth), for example (though this specifically, only makes you more detectable to the major anti-bot solutions).
+PyppeteerProtect (at the moment) doesn't provide protection for running in headless mode, besides a simple set of the useragent to remove `HeadlessChrome`. For this you should look into finding an additional library that you can run over PyppeteerProtect that can offer such protections, like [pyppeteer_stealth](https://github.com/MeiK2333/pyppeteer_stealth), for example (though this specifically, only makes you more detectable for the major anti-bot solutions).
 
 ## Install
 
