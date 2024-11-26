@@ -16,27 +16,35 @@ Import the library:
 ```python
 from PyppeteerProtect import PyppeteerProtect, SetSecureArguments;
 ```
+<br/>
+
 Set default arguments for the chrome executable that help stay protected (sets `--disable-blink-features=AutomationControlled` and removes `--enable-automation`) 
 ```python
 SetSecureArguments(); # should be called before pyppeteer.launch
 ```
+<br/>
+
 Protect individual pages:
 ```python
 pageProtect = await PyppeteerProtect(page);
 ```
-Switch between using the main and an isolated execution context:
+<br/>
+
+Switch between using the main and isolated execution context:
 ```python
 await pageProtect.useMainWorld();
 await pageProtect.useIsolatedWorld();
 ```
+<br/>
 
-You are freely able to swap between each of the contexts during an active session. As an example, you might want to do something like this:
+You are freely able to swap between each of the contexts during active sessions. As an example, you might want to do something like this:
 ```python
 await pageProtect.useIsolatedWorld();
 token = await page.evaluate("() => document.querySelector('input[type=\'hidden\']#embedded-token')"); # document.querySelector might have been hooked in the main world to block queries for #embedded-token
 await pageProtect.useMainWorld();
 data = await page.evaluate("(token) => window.get_some_data(token)", token);
 ```
+<br/>
 
 By default, PyppeteerProtect will use the execution context id of an isolated world. This is ideal for ensuring maximum security, as you don't have to worry about calling hooked global functions or accidentally leaking your pressence through global variables, however, it makes the code of the target page inaccessible.
 
@@ -44,6 +52,7 @@ If you plan on using the main world execution context and nothing else, you can 
 ```python
 pageProtect = await PyppeteerProtect(page, True);
 ```
+<br/>
 
 If you have a particularly special use case and are having issues with automatically obtaining an execution context id, you can use PyppeteerProtect to wait until one is obtained (though if you stick to basic `Page.evaluate` calls, this isn't something you should be worried about, as it gets called automatically)
 ```python
@@ -87,4 +96,4 @@ PyppeteerProtect works by calling `Runtime.disable` and hooking `CDPSession.send
 
 PyppeteerProtect retrieves an execution context either by calling out to a binding (created with `Runtime.addBinding` and `Runtime.bindingCalled`, and called using `Page.addScriptToEvaluateOnNewDocument` and `Runtime.evaluate` in an isolated context), or by creating an isolated world (using `Page.createIsolatedWorld`).
 
-These patches are applied automatically on each navigation by listening to the `request` and `response` events of the page, and by hooking `ExecutionContext.evaluateHandle`.
+These patches are applied automatically on each navigation by listening to the `request` and `response` events of the page, and by hooking `ExecutionContext.evaluateHandle` to explicitly wait for an execution context to be obtained, incase one hasn't been retrieved in time.
