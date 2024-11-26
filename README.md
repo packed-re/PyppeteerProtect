@@ -43,7 +43,8 @@ pageProtect = await PyppeteerProtect(page, True);
 You are able to freely swap between each of the contexts during active sessions, which allows you to do cool things like this:
 ```python
 await pageProtect.useIsolatedWorld();
-token = await page.evaluate("() => document.querySelector('input[type=\'hidden\']#embedded-token')"); # document.querySelector might have been hooked in the main world to block queries for #embedded-token
+# document.querySelector might have been hooked in the main world to block queries for #embedded-token
+token = await page.evaluate("() => document.querySelector('input[type=\'hidden\']#embedded-token')");
 await pageProtect.useMainWorld();
 data = await page.evaluate("(token) => window.get_some_data(token)", token);
 ```
