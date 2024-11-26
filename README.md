@@ -16,26 +16,19 @@ Import the library:
 ```python
 from PyppeteerProtect import PyppeteerProtect, SetSecureArguments;
 ```
-<br/>
-
 Set default arguments for the chrome executable that help stay protected (sets `--disable-blink-features=AutomationControlled` and removes `--enable-automation`) 
 ```python
 SetSecureArguments(); # should be called before pyppeteer.launch
 ```
-<br/>
-
 Protect individual pages:
 ```python
 pageProtect = await PyppeteerProtect(page);
 ```
-<br/>
-
 Switch between using the main and isolated execution context:
 ```python
 await pageProtect.useMainWorld();
 await pageProtect.useIsolatedWorld();
 ```
-<br/>
 
 You are freely able to swap between each of the contexts during active sessions. As an example, you might want to do something like this:
 ```python
@@ -44,7 +37,6 @@ token = await page.evaluate("() => document.querySelector('input[type=\'hidden\'
 await pageProtect.useMainWorld();
 data = await page.evaluate("(token) => window.get_some_data(token)", token);
 ```
-<br/>
 
 By default, PyppeteerProtect will use the execution context id of an isolated world. This is ideal for ensuring maximum security, as you don't have to worry about calling hooked global functions or accidentally leaking your pressence through global variables, however, it makes the code of the target page inaccessible.
 
@@ -52,7 +44,6 @@ If you plan on using the main world execution context and nothing else, you can 
 ```python
 pageProtect = await PyppeteerProtect(page, True);
 ```
-<br/>
 
 If you have a particularly special use case and are having issues with automatically obtaining an execution context id, you can use PyppeteerProtect to wait until one is obtained (though if you stick to basic `Page.evaluate` calls, this isn't something you should be worried about, as it gets called automatically)
 ```python
