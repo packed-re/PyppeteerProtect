@@ -40,7 +40,7 @@ pageProtect = await PyppeteerProtect(page, True);
 ```
 
 ### Special use cases
-You are able to freely swap between each of the contexts during active sessions, which allows you to do cool things like this:
+You are able to freely swap between each of the contexts during active sessions, which allows you to do things like this:
 ```python
 await pageProtect.useIsolatedWorld();
 # document.querySelector might have been hooked in the main world to block queries for #embedded-token
