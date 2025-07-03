@@ -40,7 +40,7 @@ pageProtect = await PyppeteerProtect(page, True);
 ```
 
 ### Special use cases
-You are able to freely swap between each of the contexts during active sessions, which allows you to do things like this:
+You are freely able to swap between either type of context during active sessions. This allows allows you to do useful things like this:
 ```python
 await pageProtect.useIsolatedWorld();
 # document.querySelector might have been hooked in the main world to block queries for #embedded-token
@@ -87,7 +87,7 @@ loop.run_until_complete(main());
 
 ## How does it works?
 
-PyppeteerProtect works by calling `Runtime.disable` and hooking `CDPSession.send` to drop any `Runtime.enable` requests sent by the pyppeteer library. `Runtime.enable` is used to retrieve an execution context id, which is required for functions such as `Page.evaluate` and `Page.querySelectorAll` to work, but in doing so, it enables the scripts running on the target page to observe behavior that would indicate the browser is being controlled by automation software, like pyppeteer/puppeteer.
+PyppeteerProtect works by calling `Runtime.disable` and hooking `CDPSession.send` to drop any `Runtime.enable` requests sent by the pyppeteer library. `Runtime.enable` is used to retrieve an execution context id, which is required for functions such as `Page.evaluate` and `Page.querySelectorAll` to work, but in doing so it enables the scripts running on the target page to observe behavior that would indicate the browser is being controlled by automation software, like pyppeteer/puppeteer.
 
 PyppeteerProtect retrieves an execution context either by calling out to a binding (created with `Runtime.addBinding` and `Runtime.bindingCalled`, and called using `Page.addScriptToEvaluateOnNewDocument` and `Runtime.evaluate` in an isolated context), or by creating an isolated world (using `Page.createIsolatedWorld`).
 
